@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>QuoteGenerator C# Code</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<style>
+body { font-family: Arial, sans-serif; padding: 20px; background-color: #f5f5f5; }
+h1 { text-align: center; }
+pre { background-color: #fff; padding: 15px; border-radius: 5px; overflow-x: auto; }
+</style>
+</head>
+<body>
+<h1>QuoteGenerator C# Code</h1><h2>Program.cs</h2>
+<pre><code class="csharp">using System;
+using System.Windows.Forms;namespace QuoteGenerator { internal static class Program { [STAThread] static void Main() { ApplicationConfiguration.Initialize(); Application.Run(new MainForm()); } } }</code></pre>
+
+<h2>MainForm.cs</h2>
+<pre><code class="csharp">using System;
+using System.Collections.Generic;
+using System.Windows.Forms;namespace QuoteGenerator { public partial class MainForm : Form { List<string> quotes = new List<string>() { "Мақсатыңа жете білу – үлкен өнер. — Әбіш Кекілбайұлы", "Еңбек етсең ерінбей, тояды қарның тіленбей. — Абай", "Білімдіден шыққан сөз, талаптыға болсын кез. — Абай" };
+
+Random random = new Random();
+
+    public MainForm()
+    {
+        InitializeComponent();
+    }
+
+    private void btnRandom_Click(object sender, EventArgs e)
+    {
+        int index = random.Next(quotes.Count);
+        lblQuote.Text = quotes[index];
+    }
+
+    private void btnAdd_Click(object sender, EventArgs e)
+    {
+        AddQuoteForm form = new AddQuoteForm();
+        if (form.ShowDialog() == DialogResult.OK)
+        {
+            quotes.Add(form.NewQuote);
+        }
+    }
+}
+
+}</code></pre>
+
+<h2>MainForm.Designer.cs</h2>
+<pre><code class="csharp">namespace QuoteGenerator
+{
+    partial class MainForm
+    {
+        Label lblQuote;
+        Button btnRandom;
+        Button btnAdd;private void InitializeComponent()
+    {
+        this.Text = "Цитата Генераторы";
+        this.Width = 600;
+        this.Height = 300;
+
+        lblQuote = new Label();
+        lblQuote.Text = "Цитата осында шығады";
+        lblQuote.AutoSize = false;
+        lblQuote.Width = 500;
+        lblQuote.Height = 80;
+        lblQuote.Top = 30;
+        lblQuote.Left = 50;
+        lblQuote.TextAlign = ContentAlignment.MiddleCenter;
+
+        btnRandom = new Button();
+        btnRandom.Text = "Кездейсоқ Цитата";
+        btnRandom.Top = 130;
+        btnRandom.Left = 200;
+        btnRandom.Click += btnRandom_Click;
+
+        btnAdd = new Button();
+        btnAdd.Text = "Жаңа Цитата Қосу";
+        btnAdd.Top = 170;
+        btnAdd.Left = 200;
+        btnAdd.Click += btnAdd_Click;
+
+        this.Controls.Add(lblQuote);
+        this.Controls.Add(btnRandom);
+        this.Controls.Add(btnAdd);
+    }
+}
+
+}</code></pre>
+
+<h2>AddQuoteForm.cs</h2>
+<pre><code class="csharp">using System;
+using System.Windows.Forms;namespace QuoteGenerator { public partial class AddQuoteForm : Form { public string NewQuote { get; private set; }
+
+public AddQuoteForm()
+    {
+        InitializeComponent();
+    }
+
+    private void btnSave_Click(object sender, EventArgs e)
+    {
+        NewQuote = txtQuote.Text + " — " + txtAuthor.Text;
+        this.DialogResult = DialogResult.OK;
+        this.Close();
+    }
+}
+
+}</code></pre>
+
+<h2>AddQuoteForm.Designer.cs</h2>
+<pre><code class="csharp">namespace QuoteGenerator
+{
+    partial class AddQuoteForm
+    {
+        TextBox txtQuote;
+        TextBox txtAuthor;
+        Button btnSave;private void InitializeComponent()
+    {
+        this.Text = "Жаңа Цитата Қосу";
+        this.Width = 400;
+        this.Height = 250;
+
+        txtQuote = new TextBox();
+        txtQuote.Multiline = true;
+        txtQuote.Width = 300;
+        txtQuote.Height = 60;
+        txtQuote.Top = 20;
+        txtQuote.Left = 40;
+
+        txtAuthor = new TextBox();
+        txtAuthor.Width =
